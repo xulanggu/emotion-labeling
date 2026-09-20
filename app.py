@@ -30,23 +30,21 @@ if "session_id" not in st.session_state:
 if st.session_state.stage == "consent":
     st.title("🏷️ Tweet Emotion Labeling")
     st.markdown("""
-    ### What you'll do
-    You will read **5 randomly selected tweets** and label each with the
-    emotion it most strongly expresses. Choose from:
+    ### What you will do
+    You will read **5 randomly selected tweets** data and label each with the
+    emotion it most strongly expresses. Choose one from the 6 emotions below:
 
     **anger · fear · joy · love · sadness · surprise**
 
     ### Instructions
-    - Read the full tweet before deciding.
-    - Pick the single emotion that best fits your first impression.
+    - Please read the full tweet before deciding.
     - If two feel equally plausible, go with the stronger one.
-    - This should take under 3 minutes.
 
-    ### Data collected
-    Your name/ID, the tweets you saw, your labels, and timestamps will be
-    saved for a class assignment (CSE 594 A1-2).
+    ### Data collected in this session
+    Please notice that your name, the tweets you saw, your labels, and timestamps will be
+    saved for CSE 594 A1-2 class assignment.
     """)
-    name = st.text_input("Your name or UMich uniqname:")
+    name = st.text_input("Your name:")
     if st.button("Start", disabled=(not name.strip())):
         st.session_state.participant = name.strip()
         st.session_state.sample = pool.sample(
@@ -90,7 +88,7 @@ elif st.session_state.stage == "done":
     header = not os.path.exists(LOG_PATH)
     df_new.to_csv(LOG_PATH, mode="a", header=header, index=False)
 
-    st.success("✅ Thanks — your labels have been recorded!")
+    st.success("✅ Thanks, your labels have been recorded!")
     st.markdown(f"**Session ID:** `{st.session_state.session_id}`")
     st.markdown("### Your labels:")
     st.dataframe(df_new[["tweet_text", "user_label", "true_label"]],
